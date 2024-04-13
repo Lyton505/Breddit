@@ -1,0 +1,37 @@
+img{
+    height: 140px;
+    width: fit-content;
+    border-radius: 5px;
+}
+
+#upVotesArr, #commentImg{
+    height: 30px;
+}
+
+.postCard{
+    background: rgb(255, 255, 255);
+    width: 220px;
+    border-radius: 5px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    box-shadow:  0 0 10px 1px rgba(0, 0, 0, 0.22);
+}
+
+.postStats{
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+#author{
+    color: coral;
+}
+
+.postCard:hover{
+    cursor: pointer;
+}
