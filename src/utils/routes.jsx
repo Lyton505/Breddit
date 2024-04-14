@@ -5,6 +5,7 @@ import ViewPost from "../pages/ViewPost.jsx";
 import SignUp from "../pages/SignUp.jsx";
 import Home from "../pages/Home.jsx";
 import Login from "../pages/Login.jsx";
+import SearchPage from "../pages/Search.jsx";
 
 export default function getRoutes() {
   return [
@@ -18,7 +19,7 @@ export default function getRoutes() {
           element: <CreatePost></CreatePost>
         },
         {
-          path: "/post:id",
+          path: "/post/:id",
           element: <ViewPost></ViewPost>
         },
         {
@@ -35,6 +36,9 @@ export default function getRoutes() {
         {
           path: "/login",
           element: <Login></Login>
+        },{
+          path: "/search",
+          element: <SearchPage></SearchPage>
         }
       ]
     }
