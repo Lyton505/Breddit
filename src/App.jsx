@@ -11,7 +11,7 @@ function App() {
   useEffect(() => {
     const getSupabasePosts = async () => {
       const supabasePosts = await supabase.from("posts").select();
-      console.log(supabasePosts.data);
+      // console.log(supabasePosts.data);
       setPostData(supabasePosts.data);
     };
 
