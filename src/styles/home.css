@@ -1,0 +1,12 @@
+.homeDiv{
+    width: 100%;
+}
+
+.postsDiv{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    gap: 10px;
+    padding: 10px;
+    flex-wrap: wrap;
+}
