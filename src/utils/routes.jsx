@@ -6,7 +6,7 @@ import SignUp from "../pages/SignUp.jsx";
 import Home from "../pages/Home.jsx";
 import Login from "../pages/Login.jsx";
 
-export default function routes() {
+export default function getRoutes() {
   return [
     {
       path: "/",
