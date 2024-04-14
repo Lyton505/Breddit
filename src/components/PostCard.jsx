@@ -1,4 +1,4 @@
-import bitCoinImg from "/public/postDefaultImage.jpg";
+import bitCoinImg from "/postDefaultImage.jpg";
 import "/src/styles/postCard.css";
 import upVoteArrow from "/src/assets/arrow-up.svg";
 import comments from "/src/assets/comments.svg";
@@ -9,9 +9,12 @@ export default function PostCard({
                                    author = "Satoshi Nakamoto",
                                    creation_time = "10:56PM UTC",
                                    imgUrl = bitCoinImg,
-                                   commentCount = 100
+                                   commentCount = 0
                                  }) {
 
+  if (imgUrl === null || imgUrl === ""){
+    imgUrl = bitCoinImg
+  }
 
   return (
     <div className={"postCard"}>
