@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -7,15 +7,27 @@ import ListItemText from "@mui/material/ListItemText";
 import HomeIcon from "@mui/icons-material/Home";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import logo from "/src/assets/logo.svg";
-import { ListItemButton } from "@mui/material";
+import { Collapse, ListItemButton } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import FaceIcon from "@mui/icons-material/Face";
 import { Link } from "react-router-dom";
 import '/src/styles/sidebar.css'
 import SearchIcon from '@mui/icons-material/Search';
+import { ExpandLess, ExpandMore } from "@mui/icons-material";
 
-function Sidebar(username) {
-  username = "Peter";
+function LogoutIcon() {
+  return null;
+}
+
+function Sidebar({ userInfo, signOut }) {
+
+  const [open, setOpen] = useState(false);
+
+  const handleToggle = () => {
+    setOpen(!open);
+  };
+
+  const username = userInfo.identities[0].identity_data.user_name;
   return (
     <Drawer
       variant="permanent"
@@ -61,14 +73,27 @@ function Sidebar(username) {
           <ListItemText primary="Search" />
         </ListItemButton></Link>
         <Divider></Divider>
-        <ListItemButton>
+
+
+        <ListItemButton onClick={handleToggle}>
           <ListItemIcon>
             <FaceIcon />
           </ListItemIcon>
-          <ListItemText>
-            Logged in as {username}
-          </ListItemText>
+          <ListItemText primary={`Logged in as ${username}`} />
+          {open ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
+        <Collapse in={open} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            <ListItemButton sx={{ pl: 4 }} onClick={signOut}>
+              <ListItemIcon>
+                <LogoutIcon />
+              </ListItemIcon>
+              <ListItemText primary="Logout" />
+            </ListItemButton>
+          </List>
+        </Collapse>
+
+
       </List>
     </Drawer>
   );
