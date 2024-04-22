@@ -6,6 +6,10 @@ This web app: **A reddit-like forum for discussing Bitcoin**
 
 Time spent: approx **15** hours spent in total
 
+Live desktop site: https://breddit505.netlify.app
+
+
+
 ## Required Features
 
 The following **required** functionality is completed:
