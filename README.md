@@ -18,7 +18,7 @@ The following **required** functionality is completed:
   is shown on the feed**
 - [x] **Clicking on a post shall direct the user to a new page for the selected 
   post**
-- [ ] **Users can sort posts by either their created time or upvotes count**
+- [x] **Users can sort posts by either their created time or upvotes count**
 - [ ] **Users can search for posts by title**
 - [x] **A separate post page for each created post, where any additional 
   information is shown is linked whenever a user clicks a post**
