@@ -73,16 +73,19 @@ export default function Home() {
       <div className={"postsDiv"}>
         {postData.length > 0 ? postData.map((post) => {
             // console.log("This post data: ", post);
-            return (<Link className={"appLink"} to={"/post/" + post.post_id}
-                          key={post.post_id}><PostCard
-              key={post.post_id}
-              upvotes={post.upvotes}
-              title={post.heading}
-              author={post.poster}
-              imgUrl={post.imageUrl}
-              commentCount={post.comments}
-              creation_time={post.created_at}
-            ></PostCard></Link>);
+            return (
+              <Link className={"appLink"} to={"/post/" + post.post_id}
+                    key={post.post_id}>
+                <PostCard
+                  key={post.post_id}
+                  upvotes={post.upvotes}
+                  title={post.heading}
+                  author={post.poster}
+                  imgUrl={post.imageUrl}
+                  commentCount={post.comments}
+                  creation_time={post.created_at}>
+                </PostCard>
+              </Link>);
           }) :
           <p>Nothing here</p>
         }
