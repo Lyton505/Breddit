@@ -51,11 +51,11 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
-<!-- Replace this with whatever GIF tool you used! -->
+https://github.com/Lyton505/breddit/assets/65817176/c72859ed-51a9-4eba-bfe7-df9dd7a8b377
 
-GIF created with ...
+
+GIF created with Obs on Linux
 
 <!-- Recommended tools:
 [Kap](https://getkap.co/) for macOS
