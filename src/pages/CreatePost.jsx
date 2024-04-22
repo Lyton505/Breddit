@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -13,15 +13,38 @@ import {
   Typography
 } from "@mui/material";
 import { supabase } from "../utils/client.js";
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { useLocation, useNavigate, useOutletContext } from "react-router-dom";
 
 export default function CreatePost() {
+
+  const location = useLocation();
+  let pageFunction = "create";
+
+  let currPost = '';
+
+
+  if (location.state && location.state.hasOwnProperty("currPost")) {
+     currPost = location.state.currPost;
+    // console.log("CurrPost on url redir ", currPost);
+    pageFunction = "update";
+  }
+
   const navigate = useNavigate();
   const [postData, setPostData, user] = useOutletContext();
+
   const [title, setTitle] = useState("");
   const [image, setImage] = useState(null);
   const [body, setBody] = useState("");
   const [flag, setFlag] = useState("question");
+
+  useEffect(() => {
+    if (pageFunction === "update"){
+      setBody(currPost.body)
+      setTitle(currPost.heading)
+      setFlag(currPost.flag)
+      setImage(currPost.imageUrl)
+    }
+  }, [currPost, pageFunction]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -34,7 +57,7 @@ export default function CreatePost() {
       "created_at": new Date().toISOString().slice(11, 19),
       "image": image,
       "body": body,
-      "imageUrl" :"",
+      "imageUrl": "",
       "upvotes": 0,
       "flag": flag,
       "heading": title,
@@ -47,25 +70,33 @@ export default function CreatePost() {
     supabaseSubmit();
   };
 
+  let postId = -1;
+
   const supabaseSubmit = async () => {
     const poster = user.identities[0].identity_data.name;
     //console.log("Uploaded by ", poster);
-    const { data, error } = await supabase.from("posts").upsert({
-      "heading": title,
-      "body": body,
-      "flag": flag,
-      "poster": poster
-    }).select("*");
+    if (pageFunction !== "update") {
+      const { data, error } = await supabase.from("posts").upsert({
+        "heading": title,
+        "body": body,
+        "flag": flag,
+        "poster": poster
+      }).select("*");
+      const creationTime = data[0].updated_at.slice(11, 19);
+      postId = data[0].post_id;
 
-    //console.log(data[0]);
-    const creationTime = data[0].updated_at.slice(11, 19);
-    const postId = data[0].post_id;
-    //console.log("Created at: ", creationTime, "and id: ", postId);
+      await supabase
+        .from("posts")
+        .update({ "created_at": creationTime })
+        .eq("post_id", postId);
 
-    await supabase
-      .from("posts")
-      .update({ "created_at": creationTime })
-      .eq("post_id", postId);
+    } else {
+      const { data, error } = await supabase.from("posts").update({
+        "heading": title,
+        "body": body,
+        "flag": flag,
+      }).eq("post_id", postId);
+    }
 
     console.log("Form posted to supabase!");
 
@@ -135,7 +166,7 @@ export default function CreatePost() {
         </RadioGroup>
       </FormControl>
       <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-        Submit Post
+        {pageFunction === "update" ? "Update post" : "Submit post"}
       </Button>
     </Box>
   );
