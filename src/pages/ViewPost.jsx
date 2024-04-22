@@ -47,7 +47,7 @@ export default function ViewPost() {
   }, [currPost]);
 
 
-  // console.log(currPost);
+  console.log("Post data: ",postData);
 
   async function handleCommentSubmit(event) {
     event.preventDefault();
@@ -135,6 +135,16 @@ export default function ViewPost() {
                         setUpvoteCount(upvoteCount - 1);
                         currUpvotes--;
                       }
+
+                      console.log("currPost: ", currPost);
+
+                      const oldPosts = postData.filter((post)=> post.post_id !== Number(id) )
+
+                      currPost.upvotes = currUpvotes;
+
+                      setPostData([currPost,...oldPosts])
+
+                      console.log("old posts: ",oldPosts);
 
                       setVoted(!voted);
 
