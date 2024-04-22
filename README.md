@@ -1,4 +1,4 @@
-# Web Development Final Project - _Breddit_
+# CodePath Web Development Final Project - _Breddit_
 
 Submitted by: **Lyton Mhlanga**
 
@@ -8,7 +8,7 @@ Time spent: approx **15** hours spent in total
 
 Live desktop site: https://breddit505.netlify.app
 
-
+Built with: React & Supabase
 
 ## Required Features
 
