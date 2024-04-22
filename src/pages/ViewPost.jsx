@@ -26,6 +26,10 @@ export default function ViewPost() {
   const [commentCount, setCommentCount] = useState(0);
   const [comments, setComments] = useState([]);
   const { id = 9 } = useParams();
+  const [upvoteCount, setUpvoteCount] = useState(0);
+  const [postData, setPostData, user] = useOutletContext();
+  const [currPost] = postData.filter((post) => post.post_id === Number(id));
+  const [voted, setVoted] = useState(false);
 
   const navigate = useNavigate();
 
@@ -37,10 +41,11 @@ export default function ViewPost() {
 
     };
     getSupabaseComments();
-  }, []);
+    if (currPost) {
+      setUpvoteCount(currPost.upvotes);
+    }
+  }, [currPost]);
 
-  const [postData, setPostData , user] = useOutletContext();
-  const [currPost] = postData.filter((post) => post.post_id === Number(id));
 
   // console.log(currPost);
 
@@ -110,16 +115,40 @@ export default function ViewPost() {
                 <Box sx={{
                   display: "flex", alignItems: "start", flexDirection: "row"
                 }}>
-                  <ThumbUpAltIcon color="action" className={"thumb"}
-                                  sx={{
-                                    "&:hover": {
-                                      color: "#4578b9",
-                                      cursor: "pointer"
-                                    }
-                                  }}
+                  <ThumbUpAltIcon
+                    color={"action"}
+                    style={{ color: voted ? "#4578b9" : "" }}
+                    className={"thumb"}
+                    sx={{
+                      "&:hover": {
+                        color: "#4578b9",
+                        cursor: "pointer"
+                      }
+                    }}
+                    onClick={async () => {
+                      let currUpvotes = upvoteCount;
+                      if (!voted) {
+                        currUpvotes++;
+                        setUpvoteCount(upvoteCount + 1);
+
+                      } else {
+                        setUpvoteCount(upvoteCount - 1);
+                        currUpvotes--;
+                      }
+
+                      setVoted(!voted);
+
+                      await supabase
+                        .from("posts")
+                        .update({ "upvotes": currUpvotes })
+                        .eq("post_id", id);
+
+                    }}
                   />
-                  <Typography variant="subtitle2" sx={{ ml: 1 }}>
-                    {currPost.upvotes} Upvotes
+                  <Typography variant="subtitle2" sx={{ ml: 1 }}
+
+                  >
+                    {upvoteCount} Upvotes
                   </Typography>
                 </Box>
 
@@ -165,7 +194,7 @@ export default function ViewPost() {
 
                         setPostData(
                           postData.filter((post) => post.post_id !== Number(id))
-                        )
+                        );
                       }}
                                   sx={{
                                     ml: 1,
