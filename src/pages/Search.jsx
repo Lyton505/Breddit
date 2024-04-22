@@ -11,7 +11,7 @@ export default function Search() {
   const handleSearch = (event) => {
     // Implement your search logic here
     event.preventDefault();
-    console.log("Search submitted!");
+   //console.log("Search submitted!");
   };
 
   return (

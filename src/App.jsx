@@ -6,9 +6,10 @@ import Sidebar from "./components/SideBar.jsx";
 import LoginPage from "./pages/Login.jsx";
 
 function App() {
+  const [postData, setPostData] = useState([]);
   const [user, setUser] = useState(null);
 
-  console.log("User state at start: ", user);
+  //console.log("User state at start: ", user);
 
   useEffect(() => {
     checkUser();
@@ -17,13 +18,21 @@ function App() {
     });
   }, []);
 
+  useEffect(() => {
+    const getSupabasePosts = async () => {
+      const supabasePosts = await supabase.from("posts").select();
+      setPostData(supabasePosts.data);
+    };
+    getSupabasePosts();
+  }, []);
+
   async function checkUser() {
-    console.log("Checking user");
+    //console.log("Checking user");
     try {
       const user = await supabase.auth.getUser();
       setUser(user.data.user);
     } catch (e) {
-      console.log("User not logged in");
+      //console.log("User not logged in");
     }
   }
 
@@ -40,18 +49,6 @@ function App() {
   }
 
 
-  const [postData, setPostData] = useState([]);
-
-  useEffect(() => {
-    const getSupabasePosts = async () => {
-      const supabasePosts = await supabase.from("posts").select();
-      // console.log(supabasePosts.data);
-      setPostData(supabasePosts.data);
-    };
-
-    getSupabasePosts();
-  }, []);
-
   return (
     user === null ?
       <LoginPage signInWithGithub={signInWithGithub}></LoginPage>
@@ -59,7 +56,7 @@ function App() {
       <div className={"appCont"}>
         <Sidebar userInfo={user} signOut={signOut}></Sidebar>
         <div>
-          <Outlet context={[postData, setPostData]}></Outlet>
+          <Outlet context={[postData, setPostData, user]}></Outlet>
         </div>
       </div>
   );
