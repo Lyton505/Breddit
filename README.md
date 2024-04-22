@@ -4,7 +4,7 @@ Submitted by: **Lyton Mhlanga**
 
 This web app: **A reddit-like forum for discussing Bitcoin**
 
-Time spent: **12** hours spent in total
+Time spent: approx **15** hours spent in total
 
 ## Required Features
 
@@ -19,7 +19,7 @@ The following **required** functionality is completed:
 - [x] **Clicking on a post shall direct the user to a new page for the selected 
   post**
 - [x] **Users can sort posts by either their created time or upvotes count**
-- [ ] **Users can search for posts by title**
+- [x] **Users can search for posts by title**
 - [x] **A separate post page for each created post, where any additional 
   information is shown is linked whenever a user clicks a post**
 - [x] **Users can leave comments underneath a post on the post's separate page**
@@ -30,7 +30,8 @@ The following **required** functionality is completed:
 The following **optional** features are implemented:
 
 - [ ] Users can only edit and deleted posts or delete comments by entering the secret key, which is set by the user during post creation
-- [ ] Upon launching the web app, the user is assigned a random user ID. It will be associated with all posts and comments that they make and displayed on them.
+- [x] Upon launching the web app, the user is assigned a random user ID. It will 
+  be associated with all posts and comments that they make and displayed on them.
 - [ ] Users can repost a previous post by referencing its post ID. On the post page of the new post, the referenced post is displayed and linked, creating a thread
 - [ ] Users can customize the interface of the web app
 - [ ] Users can share and view web videos
@@ -40,7 +41,7 @@ The following **optional** features are implemented:
 
 The following **additional** features are implemented:
 
-- [ ] List anything else that you added to improve the site's functionality!
+- [x] Users can only edit or delete posts that they posted
 
 ## Video Walkthrough
 
@@ -57,9 +58,14 @@ GIF created with ...
 [ScreenToGif](https://www.screentogif.com/) for Windows
 [peek](https://github.com/phw/peek) for Linux. -->
 
-## Notes
+## Notes and reflection
 
-Describe any challenges encountered while building the app.
+- I should've thought things through to make data flow easier between components
+- I need some sort of caching mechanism to avoid making plenty of rewrites to the 
+  database. As is, Breddit scales awfully
+- Adding image functionality will require some reading; since it's time for 
+  finals, I will work on that during the summer
+- Yet to include mobile version of the site
 
 ## License
 
