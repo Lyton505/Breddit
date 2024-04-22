@@ -47,12 +47,13 @@ export default function ViewPost() {
   }, [currPost]);
 
 
-  console.log("Post data: ",postData);
+  // console.log("Post data: ",postData);
 
   async function handleCommentSubmit(event) {
     event.preventDefault();
     const commentText = event.target.elements.comment.value;
 
+    let currComments = commentCount + 1;
     setCommentCount(commentCount + 1);
 
     const randomIndex = Math.floor(Math.random() * (3000 - 75 + 1)) + 75;
@@ -74,8 +75,18 @@ export default function ViewPost() {
     }).select("*");
 
     // console.log(comments);
+    const oldPosts = postData.filter((post) => post.post_id !== Number(id));
 
-    setComments([tempComment, ...comments]);
+    currPost.comments = currComments;
+
+    setPostData([currPost, ...oldPosts]);
+
+    await supabase
+      .from("posts")
+      .update({ "comments": currComments })
+      .eq("post_id", id),
+
+      setComments([tempComment, ...comments]);
     event.target.elements.comment.value = "";
   }
 
@@ -136,15 +147,15 @@ export default function ViewPost() {
                         currUpvotes--;
                       }
 
-                      console.log("currPost: ", currPost);
+                      // console.log("currPost: ", currPost);
 
-                      const oldPosts = postData.filter((post)=> post.post_id !== Number(id) )
+                      const oldPosts = postData.filter((post) => post.post_id !== Number(id));
 
                       currPost.upvotes = currUpvotes;
 
-                      setPostData([currPost,...oldPosts])
+                      setPostData([currPost, ...oldPosts]);
 
-                      console.log("old posts: ",oldPosts);
+                      // console.log("old posts: ",oldPosts);
 
                       setVoted(!voted);
 

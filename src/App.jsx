@@ -20,7 +20,10 @@ function App() {
 
   useEffect(() => {
     const getSupabasePosts = async () => {
-      const supabasePosts = await supabase.from("posts").select();
+      const supabasePosts = await supabase
+        .from("posts")
+        .select()
+        .order("upvotes", { ascending: false });
       setPostData(supabasePosts.data);
     };
     getSupabasePosts();

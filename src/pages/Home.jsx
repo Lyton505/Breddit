@@ -65,13 +65,14 @@ export default function Home() {
     setSortUpvote(!sortUpvote);
   };
 
+
   return (
     <div className={"homeDiv"}>
       <NavTabs sortCreation={sortCreationTime}
                sortUpvotes={sortUpvoteCount}></NavTabs>
       <div className={"postsDiv"}>
         {postData.length > 0 ? postData.map((post) => {
-            // console.log("Post data: ", postData);
+            // console.log("This post data: ", post);
             return (<Link className={"appLink"} to={"/post/" + post.post_id}
                           key={post.post_id}><PostCard
               key={post.post_id}
