@@ -20,11 +20,11 @@ export default function CreatePost() {
   const location = useLocation();
   let pageFunction = "create";
 
-  let currPost = '';
+  let currPost = "";
 
 
   if (location.state && location.state.hasOwnProperty("currPost")) {
-     currPost = location.state.currPost;
+    currPost = location.state.currPost;
     // console.log("CurrPost on url redir ", currPost);
     pageFunction = "update";
   }
@@ -37,12 +37,18 @@ export default function CreatePost() {
   const [body, setBody] = useState("");
   const [flag, setFlag] = useState("question");
 
+  let poster = user.identities[0].identity_data.name;
+
+  if (poster === undefined || poster === "") {
+    poster = user.identities[0].identity_data.user_name;
+  }
+
   useEffect(() => {
-    if (pageFunction === "update"){
-      setBody(currPost.body)
-      setTitle(currPost.heading)
-      setFlag(currPost.flag)
-      setImage(currPost.imageUrl)
+    if (pageFunction === "update") {
+      setBody(currPost.body);
+      setTitle(currPost.heading);
+      setFlag(currPost.flag);
+      setImage(currPost.imageUrl);
     }
   }, [currPost, pageFunction]);
 
@@ -52,6 +58,7 @@ export default function CreatePost() {
     const randomIndex = Math.floor(Math.random() * (3000 - 75 + 1)) + 75;
 
     const currDataObj = {
+
       "comments": 0,
       "post_id": randomIndex,
       "created_at": new Date().toISOString().slice(11, 19),
@@ -61,7 +68,7 @@ export default function CreatePost() {
       "upvotes": 0,
       "flag": flag,
       "heading": title,
-      "poster": user.identities[0].identity_data.name
+      "poster": poster
     };
 
     setPostData([currDataObj, ...postData]);
@@ -73,8 +80,9 @@ export default function CreatePost() {
   let postId = -1;
 
   const supabaseSubmit = async () => {
-    const poster = user.identities[0].identity_data.name;
-    //console.log("Uploaded by ", poster);
+
+
+    console.log("Uploaded by ", poster);
     if (pageFunction !== "update") {
       const { data, error } = await supabase.from("posts").upsert({
         "heading": title,
@@ -94,7 +102,7 @@ export default function CreatePost() {
       const { data, error } = await supabase.from("posts").update({
         "heading": title,
         "body": body,
-        "flag": flag,
+        "flag": flag
       }).eq("post_id", postId);
     }
 
